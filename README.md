@@ -7,7 +7,7 @@ Microservice for selecting advertising platforms for a specific region
 
 1. download or build a docker image
 2. download docker-compose.yml
-3. run with docker-compose
+3. run with docker-compose run
 
 ## .NET start
 
