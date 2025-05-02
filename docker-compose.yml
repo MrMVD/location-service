@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  advertising-service:
+    image: location-service
+    build: .
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:5005
+      # Настройки Serilog
+      - Serilog__WriteTo__0__Name=Console
+      - Serilog__WriteTo__1__Name=File
+      - Serilog__WriteTo__1__Args__path=/app/logs/adservice-.log
+      - Serilog__WriteTo__1__Args__rollingInterval=Day
+      - Serilog__WriteTo__1__Args__retainedFileCountLimit=7
+    ports:
+      - "5756:5005"
+    volumes:
+      # Монтируем папку с логами
+      - ./logs:/app/logs
+      # Опционально: монтирование конфигов
+      - ./appsettings.Production.json:/app/appsettings.Production.json
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
