@@ -1,7 +1,7 @@
 public class TrieNode
 {
     public Dictionary<string, TrieNode> Children { get; } = new Dictionary<string, TrieNode>();
-    public HashSet<string> data { get; } = new HashSet<string>();
+    public HashSet<string> Data { get; } = new HashSet<string>();
     private readonly ReaderWriterLockSlim rwNodeLock = new ReaderWriterLockSlim();
 
     // Потокобезопасное добавление данных
@@ -10,7 +10,7 @@ public class TrieNode
         rwNodeLock.EnterWriteLock();
         try
         {
-            data.Add(company);
+            Data.Add(company);
         }
         finally
         {
@@ -24,7 +24,7 @@ public class TrieNode
         rwNodeLock.EnterReadLock();
         try
         {
-            return new HashSet<string>(data);
+            return new HashSet<string>(Data);
         }
         finally
         {
